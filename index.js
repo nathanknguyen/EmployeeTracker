@@ -107,7 +107,12 @@ const viewRoles = () => {
 }
 
 const viewEmployees = () => {
-  
+  const query = 'select employee.first_name, employee.last_name, role.title as `role`, role.salary, department.name as `department`, concat(manager.first_name, " ", manager.last_name) as manager from employee as employee left outer join employee as manager on employee.manager_id = manager.id inner join `role` as role on employee.role_id = role.id inner join department as department on role.department_id = department.id order by employee.first_name, employee.last_name'
+  connection.query(query,(err, res) => {
+    if(err) throw err;
+      console.table(res);
+      runSearch();
+  })
 }
 
 const addDepartments = () => {
