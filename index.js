@@ -103,7 +103,12 @@ const viewDepartments = () => {
 }
 
 const viewRoles = () => {
-  
+  const query = 'select title, salary, department_id from `role` inner join department on role.department_id = department.id order by `title`'
+  connection.query(query,(err, res) => {
+    if(err) throw err;
+      console.table(res);
+      runSearch();
+  })
 }
 
 const viewEmployees = () => {
