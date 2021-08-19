@@ -239,10 +239,35 @@ const updateRoles = () => {
   ])
     .then((answer) => {
       const idHolder = res.findIndex(
+        (employee) => employee.fullname === answer.employee
+      )
+      const employeeId = res[idHolder].id;
+      updateRoles2(employeeId)
+    })
+  })
+}
+const updateRoles2 = (employeeId) => {
+  let query = "select id, title from `role`";
+  connection.query(query, (err, res) => {
+    if (err) throw err
+    inquirer
+    .prompt([{
+      name: 'role',
+      type: 'rawlist',
+      message: 'what is the new role of the employee',
+      choices: res.map((role) => role.title)
+    }])
+    .then((answer) => {
+      const roleHolder = res.findIndex(
         (role) => role.title === answer.role
       )
-      const roleId = res[idHolder].id;
-      addEmployee2(answer.firstname, answer.lastname, roleId)
+      const roleId = res[roleHolder].id;
+      const query = `update employee set role_id = ${roleId} where id = ${employeeId}}`;
+      connection.query(query,(err) => {
+        if(err) throw err;
+          console.table(answer);
+          runSearch();
+      })
     })
   })
 }
