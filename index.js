@@ -239,7 +239,7 @@ const updateRoles = () => {
   ])
     .then((answer) => {
       const idHolder = res.findIndex(
-        (employee) => employee.fullname === answer.employee
+        (employee) => employee.fullname === answer.employeename
       )
       const employeeId = res[idHolder].id;
       updateRoles2(employeeId)
@@ -262,7 +262,7 @@ const updateRoles2 = (employeeId) => {
         (role) => role.title === answer.role
       )
       const roleId = res[roleHolder].id;
-      const query = `update employee set role_id = ${roleId} where id = ${employeeId}}`;
+      const query = `update employee set role_id = ${roleId} where id = ${employeeId}`;
       connection.query(query,(err) => {
         if(err) throw err;
           console.table(answer);
